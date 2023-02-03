@@ -5,6 +5,7 @@ namespace Helmich\TypoScriptLint\Logging;
 use Helmich\TypoScriptLint\Linter\ReportPrinter\CheckstyleReportPrinter;
 use Helmich\TypoScriptLint\Linter\ReportPrinter\ConsoleReportPrinter;
 use Helmich\TypoScriptLint\Linter\ReportPrinter\GccReportPrinter;
+use Helmich\TypoScriptLint\Linter\ReportPrinter\GitlabCodeclimateReportPrinter;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -38,6 +39,8 @@ class LinterLoggerBuilder
             : $consoleOutput;
 
         switch ($outputFormat) {
+            case 'gitlab':
+                return new CompactConsoleLogger(new GitlabCodeclimateReportPrinter($reportOutput), $errorOutput);
             case 'checkstyle':
             case 'xml':
                 return new CompactConsoleLogger(new CheckstyleReportPrinter($reportOutput), $errorOutput);
